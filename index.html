@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ocelado Linux</title>
+<meta name="description" content="Steam Game Mode on openSUSE Tumbleweed, for the Steam Deck, AMD handhelds and desktop PCs.">
+<meta property="og:title" content="Ocelado Linux">
+<meta property="og:description" content="Steam Game Mode on openSUSE Tumbleweed, for the Steam Deck, AMD handhelds and desktop PCs.">
+<meta property="og:image" content="https://ocelado-linux.github.io/assets/ocelado-logo.png">
+<link rel="icon" href="assets/ocelado-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --leaf: #13785b;      /* logo green */
+  --moss: #0b4a39;      /* dark green */
+  --ocellus: #2454c8;   /* logo blue spot */
+  --ocellus-deep: #143094;
+  --ink: #0d1714;
+  --stone: #eef2ea;     /* page */
+  --chalk: #f9fbf7;     /* raised */
+  --line: #020505;      /* logo outline */
+  --muted: #4b5b55;
+  --code-bg: #0f2a22;
+  --code-ink: #d6efe4;
+
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --measure: 66ch;
+  --gutter: clamp(16px, 4vw, 48px);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--stone);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--ocellus-deep); text-underline-offset: 0.18em; }
+a:hover { color: var(--ocellus); }
+:focus-visible { outline: 3px solid var(--ocellus); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { width: min(1120px, 100%); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---------- header ---------- */
+.top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding-block: 18px;
+}
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none;
+  font: 800 1.15rem/1 var(--display); letter-spacing: -0.01em; }
+.brand img { width: 34px; height: 34px; }
+.top nav { display: flex; gap: clamp(12px, 2.5vw, 28px); flex-wrap: wrap; }
+.top nav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+.top nav a:hover { color: var(--leaf); text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.hero {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+  padding-block: clamp(40px, 8vw, 96px) clamp(48px, 8vw, 104px);
+}
+.hero h1 {
+  font: 800 clamp(3rem, 9vw, 6.6rem)/0.9 var(--display);
+  letter-spacing: -0.035em; margin: 0 0 0.35em;
+  color: var(--leaf);
+  -webkit-text-stroke: 2px var(--line);
+  paint-order: stroke fill;
+}
+.hero .lede {
+  font: 500 clamp(1.25rem, 2.4vw, 1.6rem)/1.3 var(--display);
+  margin: 0 0 1.4em; max-width: 26ch; letter-spacing: -0.01em;
+}
+.hero .facts { margin: 0 0 2rem; padding: 0; list-style: none; max-width: 52ch; color: var(--muted); }
+.hero .facts li { padding-left: 1.6em; position: relative; margin: 0.35em 0; }
+
+/* ocellus: the blue eye-spot of the lizard, used as the list marker */
+.ocelli li::before, .hero .facts li::before {
+  content: ""; position: absolute; left: 0; top: 0.42em;
+  width: 0.85em; height: 0.85em; border-radius: 50%;
+  background: radial-gradient(circle, var(--ocellus-deep) 0 38%, var(--ocellus) 40% 70%, var(--line) 72%);
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  padding: 0.8em 1.3em; border: 3px solid var(--line); border-radius: 999px;
+  font: 600 1rem/1 var(--body); text-decoration: none; color: var(--ink);
+  background: var(--chalk);
+  transition: transform .12s ease, background-color .12s ease;
+}
+.btn:hover { transform: translateY(-2px); color: var(--ink); }
+.btn.primary { background: var(--leaf); color: #fff; }
+.btn.primary:hover { background: var(--moss); color: #fff; }
+.small { font-size: 0.9rem; color: var(--muted); }
+
+.hero-art { position: relative; justify-self: center; width: min(440px, 100%); aspect-ratio: 1; }
+.hero-art .spot {
+  position: absolute; border-radius: 50%; border: 3px solid var(--line);
+  background: radial-gradient(circle, var(--ocellus-deep) 0 42%, var(--ocellus) 44%);
+}
+.hero-art .s1 { width: 22%; height: 22%; left: 2%; top: 8%; }
+.hero-art .s2 { width: 13%; height: 13%; right: 4%; top: 2%; }
+.hero-art .s3 { width: 16%; height: 16%; right: 0; bottom: 10%; }
+.hero-art img { position: absolute; inset: 2%; width: 96%; height: 96%;
+  animation: wake 900ms cubic-bezier(.2,.8,.2,1) both; }
+@keyframes wake { from { opacity: 0; transform: translateX(-24px) rotate(-6deg); } to { opacity: 1; transform: none; } }
+
+/* ---------- sections ---------- */
+section { padding-block: clamp(48px, 7vw, 88px); }
+.band { background: var(--chalk); border-block: 3px solid var(--line); }
+h2 {
+  font: 800 clamp(2rem, 4.6vw, 3.1rem)/1.02 var(--display);
+  letter-spacing: -0.025em; margin: 0 0 0.5em; max-width: 20ch;
+}
+h3 { font: 800 1.3rem/1.15 var(--display); margin: 0 0 0.4em; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; max-width: var(--measure); }
+.intro { font-size: 1.15rem; color: var(--muted); max-width: 60ch; margin-bottom: 2.2rem; }
+
+/* editions table */
+.table-scroll { overflow-x: auto; border: 3px solid var(--line); border-radius: 18px; background: var(--chalk); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; }
+th, td { text-align: left; vertical-align: top; padding: 14px 16px; border-bottom: 1px solid #c9d4cd; }
+thead th { font: 800 1.15rem/1.15 var(--display); background: var(--leaf); color: #fff; border-bottom: 3px solid var(--line); }
+thead th span { display: block; font: 400 0.85rem/1.3 var(--body); opacity: .9; margin-top: 4px; }
+tbody th { font-weight: 600; width: 15%; color: var(--moss); }
+tbody tr:last-child > * { border-bottom: 0; }
+td { font-size: 0.97rem; }
+
+/* features */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 56px; margin-top: 8px; }
+.features p { color: var(--muted); }
+
+/* install steps */
+.steps { list-style: none; padding: 0; margin: 0; counter-reset: step; display: grid; gap: 28px; max-width: 760px; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 56px 1fr; gap: 18px; }
+.steps li::before {
+  content: counter(step);
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid var(--line); background: var(--ocellus); color: #fff;
+  display: grid; place-items: center; font: 800 1.25rem/1 var(--display);
+}
+.steps p { margin: 0; color: var(--muted); }
+
+pre {
+  margin: 0.6em 0 1.2em; padding: 16px 18px; overflow-x: auto;
+  background: var(--code-bg); color: var(--code-ink);
+  border: 3px solid var(--line); border-radius: 12px;
+  font: 400 0.92rem/1.55 var(--mono);
+}
+code { font-family: var(--mono); font-size: 0.92em; }
+p code, li code, td code { background: #dfe8e2; padding: 0.08em 0.35em; border-radius: 4px; }
+
+.ocelli { list-style: none; padding: 0; margin: 0 0 1em; }
+.ocelli li { position: relative; padding-left: 1.6em; margin: 0.45em 0; max-width: var(--measure); }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: start; }
+
+/* footer */
+footer { background: var(--moss); color: #dcebe4; padding-block: 48px; border-top: 3px solid var(--line); }
+footer a { color: #fff; }
+footer .cols { display: flex; flex-wrap: wrap; gap: 24px 48px; justify-content: space-between; align-items: flex-start; }
+footer .brand { color: #fff; }
+footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width: 70ch; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-art { width: min(300px, 80%); order: -1; }
+  .features, .two { grid-template-columns: 1fr; }
+  .top nav { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art img { animation: none; }
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
+  <nav aria-label="Sections">
+    <a href="#editions">Editions</a>
+    <a href="#inside">What's inside</a>
+    <a href="#install">Install</a>
+    <a href="https://github.com/ocelado-linux">GitHub</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Ocelado Linux</h1>
+      <p class="lede">Steam Game Mode on openSUSE Tumbleweed, for handhelds and desktop PCs.</p>
+      <ul class="facts">
+        <li>Boots straight into Steam, like a Steam Deck. Desktop Mode is one button away.</li>
+        <li>Rolling release with a read-only system: every update is a snapshot you can roll back from the boot menu.</li>
+        <li>Gaming kernels included: OGC for handhelds, linux-tkg with BORE for desktops.</li>
+      </ul>
+      <div class="actions">
+        <a class="btn primary" href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso">Download the installer</a>
+        <a class="btn" href="#editions">Compare editions</a>
+      </div>
+      <p class="small" style="margin-top:14px">Version 0.3 for x86_64. The same installer covers every edition.</p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <span class="spot s1"></span><span class="spot s2"></span><span class="spot s3"></span>
+      <img src="assets/ocelado-logo-full.svg" alt="">
+    </div>
+  </div>
+
+  <section id="editions" class="band">
+    <div class="wrap">
+      <h2>Four editions, one installer</h2>
+      <p class="intro">You pick the edition in the installer. Each one installs only what that machine needs.</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Steam Deck<span>LCD and OLED</span></th>
+              <th scope="col">Handhelds<span>AOKZOE, OneXPlayer and other AMD handhelds</span></th>
+              <th scope="col">Desktop<span>PCs and laptops</span></th>
+              <th scope="col">Desktop Minimal<span>for people who build their own setup</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Starts in</th>
+              <td>Steam Game Mode</td><td>Steam Game Mode</td><td>KDE Plasma</td><td>KDE Plasma</td></tr>
+            <tr><th scope="row">Desktop</th>
+              <td>KDE Plasma, with on-screen keyboard</td><td>KDE Plasma, with on-screen keyboard</td>
+              <td>KDE Plasma with the usual apps and Discover</td><td>Plasma with Konsole and Dolphin only</td></tr>
+            <tr><th scope="row">Kernel</th>
+              <td>OGC, plus linux-tkg</td><td>OGC, plus linux-tkg</td>
+              <td>linux-tkg (x86-64-v3 or v2, chosen for your CPU), plus OGC</td><td>Same as Desktop</td></tr>
+            <tr><th scope="row">Hardware</th>
+              <td>Fan control, display and audio tuning, gyro</td><td>InputPlumber controller support, TDP control</td>
+              <td>LACT for AMD GPU tuning</td><td>Nothing extra</td></tr>
+            <tr><th scope="row">Apps</th>
+              <td>Steam, Faugus Launcher, ProtonPlus, Flatpak with Flathub</td><td>Steam, Faugus Launcher, ProtonPlus, Flatpak with Flathub</td><td>Steam, Faugus Launcher, ProtonPlus, Flatpak with Flathub</td><td>Flatpak with Flathub, nothing else</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="inside">
+    <div class="wrap">
+      <h2>What's inside</h2>
+      <div class="features">
+        <div>
+          <h3>Game Mode and Desktop Mode</h3>
+          <p>The handheld editions start in Steam's Game Mode through gamescope. Switch to Desktop from Steam's power menu, and use the Return to Gaming Mode icon to go back.</p>
+        </div>
+        <div>
+          <h3>Updates you can undo</h3>
+          <p>The system is read-only and updates with <code>transactional-update</code>. Each update becomes a new snapshot, applied on the next reboot. If something breaks, pick an earlier snapshot in the boot menu.</p>
+        </div>
+        <div>
+          <h3>Kernels built for games</h3>
+          <p>OGC, from the Open Gaming Collective, carries handheld fixes. linux-tkg brings the BORE scheduler and a 1000 Hz timer, built for x86-64-v2 and v3. The boot menu keeps the kernel you used last on top.</p>
+        </div>
+        <div>
+          <h3>openSUSE Tumbleweed underneath</h3>
+          <p>Ocelado is a small layer on top of Tumbleweed: same packages, same repositories, rolling updates. NTSYNC, BBR and a raised <code>vm.max_map_count</code> are set up for games.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" class="band">
+    <div class="wrap two">
+      <div>
+        <h2>Install</h2>
+        <ol class="steps">
+          <li><div><h3>Download the installer</h3><p>One ISO for every edition: <a href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso">ocelado-installer</a>.</p></div></li>
+          <li><div><h3>Write it to a USB drive</h3><p>Use Fedora Media Writer, Impression, balenaEtcher or <code>dd</code>. Everything on the USB drive is erased.</p></div></li>
+          <li><div><h3>Boot from the USB drive</h3><p>On the Steam Deck, hold Volume Down and press Power, then choose the USB drive.</p></div></li>
+          <li><div><h3>Pick your edition and disk</h3><p>The installer erases the disk you choose. Create your user and wait for it to finish.</p></div></li>
+          <li><div><h3>Restart</h3><p>Handhelds go straight into Steam. Desktops install the linux-tkg build for your CPU on first boot and use it from the next restart.</p></div></li>
+        </ol>
+      </div>
+      <div>
+        <h2>Keep it updated</h2>
+        <p>On handhelds, Steam shows system updates in its settings. Desktops update in the background. Either way, each update goes into a new snapshot. To update by hand:</p>
+<pre><code>sudo transactional-update dup
+sudo reboot</code></pre>
+        <p>To go back to the previous system, choose an older snapshot in the boot menu, then make it permanent:</p>
+<pre><code>sudo transactional-update rollback
+sudo reboot</code></pre>
+        <p>Install more apps from Flathub, or add system packages with <code>sudo transactional-update pkg install</code>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <a class="brand" href="#"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
+      <ul>
+        <li><a href="https://github.com/ocelado-linux">Source code on GitHub</a></li>
+        <li><a href="https://build.opensuse.org/project/show/home:Luthenis:ogc-handheld">Packages on the Open Build Service</a></li>
+        <li><a href="https://github.com/ocelado-linux/ocelado-packages/issues">Report a problem</a></li>
+      </ul>
+    </div>
+    <p class="legal">Ocelado Linux is a community project built on openSUSE Tumbleweed. It is not affiliated with or endorsed by openSUSE, SUSE or Valve. Steam and Steam Deck are trademarks of Valve Corporation. The name comes from the ocellated lizard, the green lizard with blue eye-spots in the logo.</p>
+  </div>
+</footer>
+
+</body>
+</html>
