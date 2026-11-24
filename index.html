@@ -186,7 +186,7 @@ footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width:
 <body>
 
 <header class="wrap top">
-  <a class="brand" href="#"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
+  <a class="brand" href="./"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
   <nav aria-label="Sections">
     <a href="#editions">Editions</a>
     <a href="#inside">What's inside</a>
@@ -209,7 +209,8 @@ footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width:
         <a class="btn primary" href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso">Download the installer</a>
         <a class="btn" href="#editions">Compare editions</a>
       </div>
-      <p class="small" style="margin-top:14px">Version 0.3 for x86_64. The same installer covers every edition and needs an internet connection.</p>
+      <p class="small" style="margin-top:14px">Version 0.3 for x86_64. The same installer covers every edition and needs an internet connection. <a href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso.sha256">SHA-256 checksum</a>.</p>
+      <p class="small">Ocelado is an early release: expect rough edges, and back up anything on the disk you install to.</p>
     </div>
     <div class="hero-art" aria-hidden="true">
       <span class="spot s1"></span><span class="spot s2"></span><span class="spot s3"></span>
@@ -270,7 +271,7 @@ footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width:
         </div>
         <div>
           <h3>openSUSE Tumbleweed underneath</h3>
-          <p>Ocelado is a small layer on top of Tumbleweed: same packages, same repositories, rolling updates. NTSYNC, BBR and a raised <code>vm.max_map_count</code> are set up for games.</p>
+          <p>Ocelado is a small layer on top of Tumbleweed: same packages, same repositories, rolling updates. NTSYNC, BBR and a raised <code>vm.max_map_count</code> are set up for games. On CPUs that support x86-64-v3, Tumbleweed's optimized HWCAPS libraries are installed and used automatically.</p>
         </div>
       </div>
     </div>
@@ -281,7 +282,7 @@ footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width:
       <div>
         <h2>Install</h2>
         <ol class="steps">
-          <li><div><h3>Download the installer</h3><p>One ISO for every edition: <a href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso">ocelado-installer</a>.</p></div></li>
+          <li><div><h3>Download the installer</h3><p>One ISO for every edition: <a href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso">ocelado-installer</a>. To check the download, run <code>sha256sum</code> on the ISO and compare the result with its <a href="https://download.opensuse.org/repositories/home:/Luthenis:/ogc-handheld/images/iso/ocelado-installer.x86_64-Ocelado.iso.sha256">checksum file</a>.</p></div></li>
           <li><div><h3>Write it to a USB drive</h3><p>Use Ventoy, Fedora Media Writer, Impression, balenaEtcher or <code>dd</code>.</p></div></li>
           <li><div><h3>Boot from the USB drive</h3><p>On the Steam Deck, hold Volume Down and press Power, then choose the USB drive.</p></div></li>
           <li><div><h3>Pick your edition and disk</h3><p>Connect to the internet first, with Wi-Fi or cable: the installer downloads the system while it installs. It erases the disk you choose. Create your user and wait for it to finish.</p></div></li>
@@ -290,7 +291,7 @@ footer .legal { margin-top: 28px; font-size: 0.85rem; color: #a9c7bb; max-width:
       </div>
       <div>
         <h2>Keep it updated</h2>
-        <p>On handhelds, Steam shows system updates in its settings. Desktops update in the background. Either way, each update goes into a new snapshot. To update by hand:</p>
+        <p>On handhelds, Steam shows system updates in its settings. Desktops download updates in the background and let you know when a restart is needed; nothing restarts on its own. Either way, each update goes into a new snapshot. To update by hand:</p>
 <pre><code>sudo transactional-update dup
 sudo reboot</code></pre>
         <p>To go back to the previous system, choose an older snapshot in the boot menu, then make it permanent:</p>
@@ -305,7 +306,7 @@ sudo reboot</code></pre>
 <footer>
   <div class="wrap">
     <div class="cols">
-      <a class="brand" href="#"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
+      <a class="brand" href="./"><img src="assets/ocelado-logo.svg" alt="">Ocelado Linux</a>
       <ul>
         <li><a href="https://github.com/ocelado-linux">Source code on GitHub</a></li>
         <li><a href="https://build.opensuse.org/project/show/home:Luthenis:ogc-handheld">Packages on the Open Build Service</a></li>
